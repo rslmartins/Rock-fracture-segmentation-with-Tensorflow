@@ -1,5 +1,7 @@
 # coding: utf-8
 
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 from network import Net
 from trainer import Trainer
 import numpy as np
@@ -35,4 +37,5 @@ def test():
 	np.save("softmax_output.npy", softmax)
 
 if __name__ == "__main__":
+	train()
 	test()

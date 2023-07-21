@@ -1,6 +1,5 @@
 # coding: utf-8
 
-import os
 import cv2
 
 """
@@ -11,7 +10,7 @@ Preprocessing the raw image in the image folder which has been made by using Lab
 """
 
 folder_names = "images/"
-img_path = [folder_names+"img_label_%d/img.png" %i for i in range(1,24)]
+img_path = [folder_names+"img_label_%d/img.png" %i for i in range(1,3)]
 
 for idx, im_path in enumerate(img_path):
 
@@ -22,7 +21,7 @@ for idx, im_path in enumerate(img_path):
 
 	grid = 20
 	hsv = cv2.cvtColor(bgr, cv2.COLOR_BGR2HSV)
-	hsv_split = cv2.split(hsv)
+	hsv_split = list(cv2.split(hsv))
 	clahe = cv2.createCLAHE(clipLimit=1.0, tileGridSize=(grid, grid))
 	hsv_split[2] = clahe.apply(hsv_split[2])
 	hsv = cv2.merge(hsv_split)

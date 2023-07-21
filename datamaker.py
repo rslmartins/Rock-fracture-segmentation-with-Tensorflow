@@ -2,11 +2,8 @@
 
 import numpy as np
 import PIL.Image as im
-import os
-import cv2
 
 data_path = './images/'
-data_type = "test" # or "train"
 
 size_raw = 1100
 size_trim = 1024
@@ -36,7 +33,7 @@ def crop_and_put(im_1024, la_1024, n):
 
 def get_raw_image_label(data_path):
 
-	folder_names = [data_path + "img_label_%d"%i for i in range(1,24)]
+	folder_names = [data_path + "img_label_%d"%i for i in range(1,3)]
 
 	im_pathes = []
 	la_pathes = []
@@ -83,31 +80,32 @@ if __name__ == "__main__":
 	imgset_224 = []
 	labelset_224 = []
 	edge = (size_raw - size_trim) // 2
-	for i in range(len(raw_img)):
-		im_1024 = raw_img[i][edge:-edge, edge:-edge, :]
-		la_1024 = raw_label[i][edge:-edge, edge:-edge, :]
-		n = size_trim // size_crop
-		if data_type == "test" :
-			imgset_1024.append(im_1024)
-			labelset_1024.append(la_1024)
-		elif data_type == "train":
-			# Flip
-			im1, im2, im3, im4 = flip(im_1024)
-			la1, la2, la3, la4 = flip(la_1024)
-			# crop and put in the train set
-			crop_and_put(im1, la1, n)
-			crop_and_put(im2, la2, n)
-			crop_and_put(im3, la3, n)
-			crop_and_put(im4, la4, n)
-	# save data
-	if data_type == "test":
-		img_set_te = np.array(imgset_1024)
-		label_set_te = np.array(labelset_1024)
-		np.save('x_test.npy',img_set_te)
-		np.save('y_test.npy',label_set_te)
+	for data_type in ["test", "train"]:
+		for i in range(len(raw_img)):
+			im_1024 = raw_img[i][edge:-edge, edge:-edge, :]
+			la_1024 = raw_label[i][edge:-edge, edge:-edge, :]
+			n = size_trim // size_crop
+			if data_type == "test" :
+				imgset_1024.append(im_1024)
+				labelset_1024.append(la_1024)
+			elif data_type == "train":
+				# Flip
+				im1, im2, im3, im4 = flip(im_1024)
+				la1, la2, la3, la4 = flip(la_1024)
+				# crop and put in the train set
+				crop_and_put(im1, la1, n)
+				crop_and_put(im2, la2, n)
+				crop_and_put(im3, la3, n)
+				crop_and_put(im4, la4, n)
+		# save data
+		if data_type == "test":
+			img_set_te = np.array(imgset_1024)
+			label_set_te = np.array(labelset_1024)
+			np.save('x_test.npy',img_set_te)
+			np.save('y_test.npy',label_set_te)
 
-	elif data_type == "train":
-		img_set_tr = np.array(imgset_224)
-		label_set_tr = np.array(labelset_224)
-		np.save('x_train.npy', img_set_tr)
-		np.save('y_train.npy',label_set_tr)
+		elif data_type == "train":
+			img_set_tr = np.array(imgset_224)
+			label_set_tr = np.array(labelset_224)
+			np.save('x_train.npy', img_set_tr)
+			np.save('y_train.npy',label_set_tr)

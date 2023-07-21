@@ -5,8 +5,12 @@ Author's implementation of [A deep convolutional neural network for rock fractur
 In this project, [Labelme](https://github.com/wkentaro/labelme) is used for data labeling and [DenseCRF](https://github.com/lucasb-eyer/pydensecrf) is used for postprocessing.
 These two libraries must be installed.
 
-## Requirement
-Tensorflow 1.x
+## Requirements
+Git
+
+Python 3.x
+
+Conda or Miniconda
 
 ## How to run
 This repository does not provide train data, only test data used for test in the paper. 
@@ -15,6 +19,11 @@ Test data is in the ``images`` folder and has been created through [Labelme](htt
 First, download this repository.
 ```
 git clone https://github.com/Montherapy/Rock-fracture-segmentation-with-Tensorflow.git
+```
+After that, create and activate the environment in order to use this repo.
+```
+conda env create -f environment.yml
+conda activate venv
 ```
 Then, we can get preprocessed images in the ``images`` folder by applying CLAHE (Contrast Limited Adaptive Histogram Equalization).
 ```
@@ -44,4 +53,3 @@ The resulting image is saved in the ``result_fig`` folder.
 ![image](./result_fig/result_image1.jpg)
 ![image](./result_fig/result_image2.jpg)
 ![image](./result_fig/result_image3.jpg)
-
