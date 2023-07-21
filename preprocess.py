@@ -1,6 +1,5 @@
 # coding: utf-8
 
-import os
 import cv2
 
 """
@@ -22,7 +21,7 @@ for idx, im_path in enumerate(img_path):
 
 	grid = 20
 	hsv = cv2.cvtColor(bgr, cv2.COLOR_BGR2HSV)
-	hsv_split = cv2.split(hsv)
+	hsv_split = list(cv2.split(hsv))
 	clahe = cv2.createCLAHE(clipLimit=1.0, tileGridSize=(grid, grid))
 	hsv_split[2] = clahe.apply(hsv_split[2])
 	hsv = cv2.merge(hsv_split)
