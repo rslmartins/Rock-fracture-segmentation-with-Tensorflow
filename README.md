@@ -18,7 +18,7 @@ Test data is in the ``images`` folder and has been created through [Labelme](htt
 
 First, download this repository.
 ```
-git clone https://github.com/Montherapy/Rock-fracture-segmentation-with-Tensorflow.git
+git clone https://github.com/rslmartins/Rock-fracture-segmentation-with-Tensorflow.git
 ```
 After that, create and activate the environment in order to use this repo.
 ```
