@@ -1,3 +1,7 @@
 *.npy
+*.log
 /__pycache__/
-images/img_he*
+/images/img_he*
+/result_fig/result_*
+/models/model*
+/models/checkpoint

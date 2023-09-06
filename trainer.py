@@ -1,9 +1,12 @@
+from tqdm import tqdm
 import numpy as np
 import tensorflow as tf
+import logging
+import datetime
+
 
 class Trainer():
 	def __init__(self, net, x_tr=None, y_tr=None):
-
 		self.net = net
 		self.saver = tf.train.Saver()
 		self.x_tr = x_tr
@@ -11,6 +14,7 @@ class Trainer():
 		config = tf.ConfigProto()
 		config.gpu_options.allow_growth = True
 		self.sess = tf.Session(config=config)
+		logging.basicConfig(filename=f"./logs/{str(datetime.datetime.now())}.log", level=logging.DEBUG)
 
 	def get_output(self, x_test, model_path=None):
 		init = tf.global_variables_initializer()
@@ -72,14 +76,14 @@ class Trainer():
 
 		optimizer = self.get_optimizer()
 		self.sess.run(tf.global_variables_initializer())
-		print("start training")
+		logging.info("start training")
 
 		if restore_path is not None:
 			self.saver.restore(self.sess, restore_path)
 
-		for epoch in range(epochs):
-			print("\n epoch : ", epoch)
-			print("learning rate : ", learning_rate * (decrease_rate ** int(epoch / decrease_epoch)))
+		for epoch in tqdm(range(epochs)):
+			logging.info(f"\n epoch : {epoch}")
+			logging.info(f"learning rate :  {learning_rate * (decrease_rate ** int(epoch / decrease_epoch))}")
 
 			# making batch set for training
 			batch_x, batch_y = [], []
@@ -107,17 +111,17 @@ class Trainer():
 			# start training
 			iter_in_1epoch = len(batch_x)
 			los = 0
-			for i in range(iter_in_1epoch):
+			for i in tqdm(range(iter_in_1epoch)):
 				l, _ = self.sess.run([self.net.loss, optimizer],
 									 feed_dict={self.net.inputs: batch_x[i], self.net.labels: batch_y[i],
 												self.net.keep_prob: keep_prob_, self.net.is_training: True,
 												self.net.learning_rate: learning_rate * (
 													decrease_rate ** int(epoch / decrease_epoch))})
 				los = los + l
-			print("epoch : {}, loss : {} ".format(epoch, los))
+			logging.info(f"epoch : {epoch}, loss : {los} ")
 
 			if save_path is not None:
 				save_path_epoch = save_path + '-ep_%d' % epoch
 				self.saver.save(self.sess, save_path_epoch)
-				print("saved")
-		print("Training Finish !")
+				logging.info(f"saved as {save_path_epoch}")
+		logging.info("Training Finished!")

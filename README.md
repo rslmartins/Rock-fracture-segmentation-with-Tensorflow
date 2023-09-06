@@ -37,10 +37,13 @@ The default setting is to create test input, and if you want to train with your 
 
 The segmentation result of the network can be obtained through ``main.py``, and the softmax value is created for postprocessing.
 ```
-python main.py
+python main.py -i train
 ```
-Currently, model5, which has the best performance, is used, and all trained models used for testing in the paper can be found in the ``logs`` folder.
-If you use the ``train`` function instead of the ``test`` function in ``main.py``, it switches to training mode.
+Currently, model5, which has the best performance, is used, and all trained models used for testing in the paper can be found in the ``models`` folder.
+
+```
+python main.py -i test
+```
 
 Postprocessing and the resulting images can be obtained as follows.
 ```
@@ -52,4 +55,3 @@ The resulting image is saved in the ``result_fig`` folder.
 
 ![image](./result_fig/result_image1.jpg)
 ![image](./result_fig/result_image2.jpg)
-![image](./result_fig/result_image3.jpg)
