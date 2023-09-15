@@ -2,9 +2,6 @@
 
 Author's implementation of [A deep convolutional neural network for rock fracture image segmentation](https://link.springer.com/article/10.1007/s12145-021-00650-1)
 
-In this project, [Labelme](https://github.com/wkentaro/labelme) is used for data labeling and [DenseCRF](https://github.com/lucasb-eyer/pydensecrf) is used for postprocessing.
-These two libraries must be installed.
-
 ## Requirements
 Git
 
@@ -24,6 +21,11 @@ After that, create and activate the environment in order to use this repo.
 ```
 conda env create -f environment.yml
 conda activate venv
+```
+In this project, [Labelme](https://github.com/wkentaro/labelme) is used for data labeling. For example, to label an image:
+```
+labelme image.png
+labelme_json_to_dataset image.json -o image
 ```
 Then, we can get preprocessed images in the ``images`` folder by applying CLAHE (Contrast Limited Adaptive Histogram Equalization).
 ```
@@ -45,7 +47,7 @@ Currently, model5, which has the best performance, is used, and all trained mode
 python main.py -i test
 ```
 
-Postprocessing and the resulting images can be obtained as follows.
+In this project, [DenseCRF](https://github.com/lucasb-eyer/pydensecrf) is used for postprocessing. Postprocessing and the resulting images can be obtained as follows:
 ```
 python postprocess.py
 ```
