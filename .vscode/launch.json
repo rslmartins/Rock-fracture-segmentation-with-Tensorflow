@@ -14,10 +14,18 @@
             "program": "${workspaceFolder}/datamaker.py",
         },
         {
-            "name": "main",
+            "name": "main - test",
             "type": "python",
             "request": "launch",
             "program": "${workspaceFolder}/main.py",
+            "args": ["-i", "test"]
+        },
+        {
+            "name": "main - train",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/main.py",
+            "args": ["-i", "train"]
         },
         {
             "name": "postprocess",
